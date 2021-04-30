@@ -2,6 +2,8 @@ plugins {
 	id 'org.springframework.boot' version '2.4.5'
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 	id 'java'
+	id 'eclipse'
+	id "com.diffplug.eclipse.apt" version "3.29.1"
 }
 
 group = 'com.benwarrick'
@@ -12,10 +14,23 @@ repositories {
 	mavenCentral()
 }
 
+ext {
+	mapstructVersion = "1.4.2.Final"
+}
+
 dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-artemis'
 	implementation 'org.springframework.boot:spring-boot-starter-webflux'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'io.projectreactor:reactor-test'
+	
+	implementation("org.mapstruct:mapstruct:${mapstructVersion}")
+	compileOnly "org.mapstruct:mapstruct-processor:${mapstructVersion}"
+	annotationProcessor "org.mapstruct:mapstruct-processor:${mapstructVersion}"
+	testAnnotationProcessor "org.mapstruct:mapstruct-processor:${mapstructVersion}"
+	
+	implementation('org.springframework.boot:spring-boot-starter-data-mongodb')
+	testImplementation('de.flapdoodle.embed:de.flapdoodle.embed.mongo')
 }
 
 test {
